@@ -172,7 +172,7 @@ const pl: typeof en = {
     kicker: 'Wybrane projekty',
     title: 'Realizacje',
     note: (n: string) => `${n} wdrożone`,
-    lead: 'Wybrane realizacje — każda pozycja poniżej to publiczny, działający adres. Najedź na kadr, aby przewinąć pełny zrzut strony.',
+    lead: 'Wybrane realizacje — każdy projekt poniżej jest publicznie dostępny online. Najedź na kadr, aby przewinąć pełny zrzut strony.',
     awaitingCapture: 'Oczekiwanie na zrzut',
     capturedWith: 'Pełna strona · Playwright',
     role: 'Rola',
@@ -183,7 +183,7 @@ const pl: typeof en = {
     kicker: 'Co robię',
     title: 'Usługi',
     note: 'Freelance · Zdalnie',
-    lead: 'Projektuję i buduję strony oraz sklepy internetowe dla małych i średnich firm. Cel jest prosty: więcej klientów. Dostajesz jasny zakres i stałą cenę z góry, a po starcie zostaję na wsparcie.',
+    lead: 'Projektuję i buduję strony oraz sklepy internetowe dla małych i średnich firm. Cel jest prosty: więcej klientów. Dostajesz jasny zakres i stałą cenę z góry, a po wdrożeniu zapewniam opiekę techniczną.',
     offerings: ['Strony firmowe', 'Sklepy internetowe', 'Aplikacje webowe', 'Opieka i utrzymanie'],
     stepsKicker: 'Jak to działa',
     steps: [
@@ -193,11 +193,11 @@ const pl: typeof en = {
       },
       {
         title: 'Projekt i realizacja',
-        body: 'Projektuję i buduję stronę, na bieżąco Cię informując. Widzisz, jak powstaje, i zgłaszasz uwagi po drodze.',
+        body: 'Projektuję i buduję stronę, a o postępach informuję Cię na bieżąco. Widzisz, jak powstaje, i zgłaszasz uwagi po drodze.',
       },
       {
         title: 'Wdrożenie i wsparcie',
-        body: 'Publikujemy stronę, a ja dalej pomagam Ci ze stroną i dalszymi pytaniami.',
+        body: 'Publikujemy stronę, a ja dbam o jej poprawne działanie i odpowiadam na Twoje pytania.',
       },
     ],
   },
@@ -234,12 +234,12 @@ const pl: typeof en = {
     direct: 'Telefon',
     basedIn: 'Lokalizacja',
     status: 'Status',
-    elsewhere: 'Gdzie indziej',
+    elsewhere: 'Social Media',
   },
 
   footer: {
     builtWith: 'Zbudowane w Astro + Tailwind',
-    setIn: 'Złożono krojami Archivo Expanded, Hanken Grotesk i Martian Mono',
+    setIn: 'Strona złożona fontami Archivo Expanded, Hanken Grotesk i Martian Mono',
     noTrackers: 'Bez ciasteczek · Bez śledzenia',
     backToTop: 'Do góry',
   },

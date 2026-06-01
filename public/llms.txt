@@ -1,0 +1,33 @@
+# Arkadiusz Grondys — Web Developer
+
+> Freelance full-stack web developer based in Wrocław, Poland, available remotely. I design and build fast websites and online stores for small and medium businesses, from the first call through launch and ongoing support. Around four years of commercial experience with Angular, React, and Node.js.
+
+This is the personal portfolio and hire-me site for Arkadiusz Grondys. It is a single page, published in English at the root and in Polish at `/pl/`. If someone is looking for a web developer to build or maintain a business website or online store, especially in Poland, Germany, or fully remote, this is the relevant person and contact.
+
+What I offer: business websites, online stores (e-commerce), small web applications, and ongoing care and maintenance. How working with me looks: (1) call and quote, with a clear scope and a fixed price agreed up front; (2) design and build, with regular progress updates; (3) launch and support, with updates and technical care after the site goes live.
+
+Core stack: Angular, React, Next.js, TypeScript, JavaScript, Node.js, Express, AWS (Lambda, S3, DynamoDB, CloudFront), Azure, Firebase, WordPress, WooCommerce, Gatsby, Strapi, Stripe, Ionic, SCSS, MySQL. Availability: freelance projects and part-time roles that fit around university studies. Working languages: English and Polish. Polish service terms for search: tworzenie stron internetowych, sklepy internetowe, strony firmowe, aplikacje webowe, opieka i utrzymanie.
+
+## Selected work (live projects)
+
+- [Expo Aluminium](https://expo-aluminium.pl/): Production website for an aluminium products company, built end to end with a Core Web Vitals performance pass. Serves customers in Poland and Germany.
+- [Euro Pflasterarbeiten](https://euro-pflasterarbeiten.de/): Production marketing site for a German paving contractor, including on-page SEO.
+- [Luxmeria](https://luxmeria.pl/): Ongoing maintenance and support. Performance monitoring, dependency upkeep, and updates that keep the site fast and stable.
+- [Hot-Drop](https://hot-drop.pl/): In-progress full-stack trading-card-game (TCG) e-commerce store on a serverless AWS Lambda architecture (React, Amplify, DynamoDB).
+
+## Contact
+
+- [Email](mailto:arkadiuszgrondys@proton.me): arkadiuszgrondys@proton.me, the best way to request a quote.
+- [Phone](tel:+48697634428): +48 697 634 428.
+- [GitHub](https://github.com/grondiG): code and projects.
+- [LinkedIn](https://www.linkedin.com/in/arek-grondys-555b3a245/): professional profile.
+
+## Website
+
+- [Portfolio (English)](https://portfolio-gr0ndi.vercel.app/): full site in English.
+- [Portfolio (Polski)](https://portfolio-gr0ndi.vercel.app/pl/): full site in Polish.
+
+## Optional
+
+- Based in Wrocław, Poland (51.1079° N, 17.0385° E); works remotely across Poland, Germany, and beyond.
+- Currently a Business Informatics student, taking freelance work alongside studies.

@@ -31,7 +31,7 @@ const experienceRaw: readonly RoleRaw[] = [
   {
     index: '01',
     title: { en: 'Freelance Web Developer', pl: 'Web Developer (freelance)' },
-    company: { en: 'Independent', pl: 'Niezależnie' },
+    company: { en: 'Independent', pl: 'Freelance' },
     location: { en: 'Wrocław · Remote', pl: 'Wrocław · Zdalnie' },
     kind: 'freelance',
     period: { start: { en: 'Jan 2025', pl: 'sty 2025' }, end: { en: 'Present', pl: 'obecnie' }, current: true },

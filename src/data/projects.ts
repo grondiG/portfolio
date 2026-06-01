@@ -93,7 +93,7 @@ const projectsRaw: readonly ProjectRaw[] = [
     },
     summary: {
       en: 'Marketing site for a German paving contractor. Translated client requirements into an implementation and executed the on-page SEO.',
-      pl: 'Strona marketingowa dla niemieckiej firmy brukarskiej. Przełożyłem wymagania klienta na wdrożenie i zrealizowałem SEO on-page.',
+      pl: 'Strona marketingowa dla niemieckiej firmy brukarskiej. Zająłem się pełnym wdrożeniem na podstawie wymagań klienta oraz optymalizacją SEO on-page.',
     },
     scope: {
       en: ['Implementation', 'Client requirements', 'SEO execution'],
@@ -113,7 +113,7 @@ const projectsRaw: readonly ProjectRaw[] = [
     year: { en: '2023 — present', pl: '2023 — obecnie' },
     benefit: {
       en: 'Ongoing care that keeps the site fast and online, so downtime never costs a sale.',
-      pl: 'Stała opieka, dzięki której strona jest szybka i dostępna, więc żadna sprzedaż nie przepada przez przestój.',
+      pl: 'Stała opieka, dzięki której strona działa szybko i stabilnie, a Ty nie tracisz klientów z powodu przestojów.',
     },
     summary: {
       en: 'Ongoing technical custody of a live site — proactive performance monitoring, dependency upkeep, and iterative updates.',

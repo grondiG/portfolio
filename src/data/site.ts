@@ -45,7 +45,7 @@ const content = {
       'Currently a Business Informatics student, taking on freelance work and open to part-time roles I can balance with my studies.',
     ],
     pl: [
-      'Full-Stack Developer z około czteroletnim komercyjnym doświadczeniem w Angularze, React i Node.js. Tworzę responsywne, skalowalne aplikacje webowe i mobilne — od inżynierii frontendu (komponenty, lazy-loading, Material / Ionic) po serverlessowe backendy w AWS, integracje z CMS i systemy płatności.',
+      'Full-Stack Developer z około czteroletnim komercyjnym doświadczeniem w technologiach Angular, React oraz Node.js. Tworzę responsywne, skalowalne aplikacje webowe i mobilne — od inżynierii frontendu (komponenty, lazy-loading, Material / Ionic) po serverlessowe backendy w AWS, integracje z systemami CMS i płatnościami.',
       'Obecnie studiuję informatykę w biznesie, realizuję projekty freelance i szukam pracy na część etatu, którą pogodzę ze studiami.',
     ],
   } satisfies L10n<readonly string[]>,
