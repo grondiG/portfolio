@@ -63,6 +63,8 @@ const tone = STATUS_META[project.status].tone;
       {project.statusLabel}
     </p>
 
+    <p class="proj__benefit text-balance">{project.benefit}</p>
+
     <p class="proj__summary text-pretty">{project.summary}</p>
 
     <p class="kicker proj__scope">
@@ -70,9 +72,10 @@ const tone = STATUS_META[project.status].tone;
       {project.scope.join('  /  ')}
     </p>
 
-    <ul class="proj__stack" aria-label="Project stack">
-      {project.stack.map((tech) => <li class="tag">{tech}</li>)}
-    </ul>
+    <p class="proj__stackline font-mono">
+      <span class="proj__stackline-key">{t.work.builtWith}</span>
+      {project.stack.join(' · ')}
+    </p>
 
     <div class="proj__links">
       {
@@ -184,11 +187,21 @@ const tone = STATUS_META[project.status].tone;
     animation: blink 1.5s steps(1, end) infinite;
   }
 
+  .proj__benefit {
+    max-width: 30ch;
+    margin: 1.4rem 0 0;
+    font-size: clamp(1.15rem, 1rem + 0.5vw, 1.4rem);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
   .proj__summary {
     max-width: 46ch;
-    margin: 1.4rem 0 0;
+    margin: 0.85rem 0 0;
     color: var(--ink-muted);
-    font-size: 1.05rem;
+    font-size: 1rem;
     line-height: 1.55;
   }
 
@@ -202,13 +215,17 @@ const tone = STATUS_META[project.status].tone;
     margin-right: 0.85rem;
   }
 
-  .proj__stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin: 1.5rem 0 0;
-    padding: 0;
-    list-style: none;
+  .proj__stackline {
+    margin: 1.4rem 0 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+  .proj__stackline-key {
+    color: var(--oxblood);
+    margin-right: 0.75rem;
   }
 
   .proj__links {

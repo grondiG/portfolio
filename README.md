@@ -1,11 +1,14 @@
 # Arkadiusz Grondys — Portfolio
 
-Personal portfolio for a full-stack developer based in Wrocław.
+Portfolio and lead-gen site for a freelance web developer in Wrocław, aimed at
+small and medium businesses looking to hire.
 
 **Live:** https://portfolio-gr0ndi.vercel.app/
 
-It's a single long-scroll page — hero, profile, stack, selected work, experience,
-education, contact — available in English (`/`) and Polish (`/pl/`).
+It's a single long-scroll page (hero, profile, services and how-it-works,
+stack, selected work, testimonials, experience, education, contact) available in
+English (`/`) and Polish (`/pl/`). The work cards lead with the business outcome
+and there's a clear "get a quote" path from the projects through to contact.
 
 The look is deliberately not the default dark-mode-with-purple-glow template.
 It's closer to a printed design annual: warm paper, near-black ink, a single

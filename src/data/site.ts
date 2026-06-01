@@ -21,18 +21,19 @@ const ROLE = 'Full-Stack Developer';
 
 const navRaw: { index: string; label: L10n; href: string }[] = [
   { index: '01', label: { en: 'Profile', pl: 'Profil' }, href: '#profile' },
-  { index: '02', label: { en: 'Stack', pl: 'Stack' }, href: '#stack' },
-  { index: '03', label: { en: 'Work', pl: 'Projekty' }, href: '#work' },
-  { index: '04', label: { en: 'Path', pl: 'Ścieżka' }, href: '#path' },
-  { index: '05', label: { en: 'Contact', pl: 'Kontakt' }, href: '#contact' },
+  { index: '02', label: { en: 'Services', pl: 'Usługi' }, href: '#services' },
+  { index: '03', label: { en: 'Stack', pl: 'Stack' }, href: '#stack' },
+  { index: '04', label: { en: 'Work', pl: 'Projekty' }, href: '#work' },
+  { index: '05', label: { en: 'Path', pl: 'Ścieżka' }, href: '#path' },
+  { index: '06', label: { en: 'Contact', pl: 'Kontakt' }, href: '#contact' },
 ];
 
 const content = {
   country: { en: 'Poland', pl: 'Polska' } satisfies L10n,
-  statusLabel: { en: 'Available for work', pl: 'Dostępny do pracy' } satisfies L10n,
+  statusLabel: { en: 'Available for work', pl: 'Gotowy do pracy' } satisfies L10n,
   statusDetail: {
-    en: 'Freelance projects & full-time roles',
-    pl: 'Projekty freelance i praca na etacie',
+    en: 'Freelance projects & part-time roles',
+    pl: 'Projekty freelance i praca na część etatu',
   } satisfies L10n,
   tagline: {
     en: 'I build responsive, scalable products — from component-level frontend to serverless backends on AWS.',
@@ -41,21 +42,21 @@ const content = {
   summary: {
     en: [
       'Full-Stack Developer with around four years of commercial experience across Angular, React, and Node.js. I build responsive, scalable web and mobile applications — from frontend engineering (components, lazy-loading, Material / Ionic) through serverless backends on AWS, CMS integrations, and payment systems.',
-      'Currently a Business Informatics student, taking on freelance work while seeking a full-time role.',
+      'Currently a Business Informatics student, taking on freelance work and open to part-time roles I can balance with my studies.',
     ],
     pl: [
       'Full-Stack Developer z około czteroletnim komercyjnym doświadczeniem w Angularze, React i Node.js. Tworzę responsywne, skalowalne aplikacje webowe i mobilne — od inżynierii frontendu (komponenty, lazy-loading, Material / Ionic) po serverlessowe backendy w AWS, integracje z CMS i systemy płatności.',
-      'Obecnie studiuję informatykę w biznesie, realizuję projekty freelance i szukam pracy na pełen etat.',
+      'Obecnie studiuję informatykę w biznesie, realizuję projekty freelance i szukam pracy na część etatu, którą pogodzę ze studiami.',
     ],
   } satisfies L10n<readonly string[]>,
   meta: {
     title: {
-      en: 'Arkadiusz Grondys — Full-Stack Developer',
-      pl: 'Arkadiusz Grondys — Full-Stack Developer',
+      en: 'Arkadiusz Grondys — Websites & Online Stores for Business',
+      pl: 'Arkadiusz Grondys — Strony i sklepy internetowe dla firm',
     } satisfies L10n,
     description: {
-      en: 'Arkadiusz Grondys is a Full-Stack Developer in Wrocław, Poland, building responsive, scalable web & mobile applications with Angular, React, and Node.js — from frontend engineering to serverless backends on AWS.',
-      pl: 'Arkadiusz Grondys — Full-Stack Developer z Wrocławia. Tworzy responsywne, skalowalne aplikacje webowe i mobilne w Angularze, React i Node.js — od frontendu po serverlessowe backendy w AWS.',
+      en: 'Freelance web developer in Wrocław, available remotely. I build fast websites and online stores for small and medium businesses, from the first call to launch and ongoing support. Get a quote.',
+      pl: 'Tworzenie stron internetowych i sklepów online dla małych i średnich firm. Wrocław i zdalnie. Od pierwszej rozmowy po wdrożenie i wsparcie. Zapytaj o wycenę.',
     } satisfies L10n,
   },
 };

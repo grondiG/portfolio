@@ -1,0 +1,116 @@
+---
+import { toLang } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import SectionHeader from '@/components/SectionHeader.astro';
+
+const lang = toLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const s = t.services;
+---
+
+<section id="services" class="section py-section">
+  <div class="sheet gutter-x">
+    <SectionHeader index="02" kicker={s.kicker} title={s.title} note={s.note} />
+
+    <div class="svc">
+      <div class="svc__intro">
+        <p class="svc__lead reveal text-pretty">{s.lead}</p>
+        <ul class="svc__offerings reveal" style="--reveal-delay:120ms" aria-label={s.title}>
+          {s.offerings.map((o) => <li class="tag">{o}</li>)}
+        </ul>
+      </div>
+
+      <div class="svc__steps">
+        <p class="kicker svc__steps-kicker reveal">{s.stepsKicker}</p>
+        <ol class="svc__list">
+          {
+            s.steps.map((step, i) => (
+              <li class="svc__step reveal" style={`--reveal-delay:${i * 70}ms`}>
+                <span class="reg font-mono svc__step-num">{String(i + 1).padStart(2, '0')}</span>
+                <div class="svc__step-body">
+                  <h3 class="font-display svc__step-title">{step.title}</h3>
+                  <p class="svc__step-text text-pretty">{step.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .svc {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+  .svc__lead {
+    max-width: 54ch;
+    font-size: theme('fontSize.lede[0]');
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .svc__offerings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .svc__steps-kicker {
+    margin-bottom: 0.75rem;
+  }
+  .svc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .svc__step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 1.25rem;
+    align-items: start;
+    padding-block: clamp(1.5rem, 3vw, 2.25rem);
+    border-bottom: 1px solid var(--rule);
+  }
+  .svc__step-num {
+    font-size: 1.1rem;
+    line-height: 1;
+    padding-top: 0.25rem;
+  }
+  .svc__step-title {
+    font-stretch: 110%;
+    font-weight: 700;
+    font-size: clamp(1.3rem, 1rem + 1.2vw, 1.85rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .svc__step-text {
+    margin: 0.7rem 0 0;
+    max-width: 52ch;
+    color: var(--ink-muted);
+  }
+
+  @media (min-width: 64rem) {
+    .svc {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: clamp(3rem, 6vw, 6rem);
+      align-items: start;
+    }
+    .svc__step {
+      grid-template-columns: 4rem 1fr;
+      gap: 2rem;
+    }
+    .svc__step-num {
+      font-size: 1.25rem;
+    }
+  }
+</style>

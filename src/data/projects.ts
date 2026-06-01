@@ -29,6 +29,8 @@ export interface Project {
   readonly status: ProjectStatus;
   readonly statusLabel: string;
   readonly year: string;
+  /** Plain-language business outcome — the line a prospective client cares about. */
+  readonly benefit: string;
   readonly summary: string;
   readonly scope: readonly string[];
   readonly stack: readonly string[];
@@ -37,9 +39,10 @@ export interface Project {
   readonly captureUrl: string;
 }
 
-interface ProjectRaw extends Omit<Project, 'statusLabel' | 'year' | 'summary' | 'scope'> {
+interface ProjectRaw extends Omit<Project, 'statusLabel' | 'year' | 'benefit' | 'summary' | 'scope'> {
   readonly statusLabel: L10n;
   readonly year: L10n;
+  readonly benefit: L10n;
   readonly summary: L10n;
   readonly scope: L10n<readonly string[]>;
 }
@@ -60,6 +63,10 @@ const projectsRaw: readonly ProjectRaw[] = [
     status: 'production',
     statusLabel: PRODUCTION,
     year: { en: '2024', pl: '2024' },
+    benefit: {
+      en: 'A professional online store that handles and brings in orders from across Poland and Germany.',
+      pl: 'Profesjonalny sklep e-commerce, obsługujący i generujący zamówienia z całej Polski i Niemiec.',
+    },
     summary: {
       en: 'End-to-end build for an aluminium fabrication brand — from stack selection through implementation to a performance pass on Core Web Vitals.',
       pl: 'Kompleksowa realizacja strony dla producenta wyrobów z aluminium — od doboru technologii, przez wdrożenie, po optymalizację Core Web Vitals.',
@@ -80,6 +87,10 @@ const projectsRaw: readonly ProjectRaw[] = [
     status: 'production',
     statusLabel: PRODUCTION,
     year: { en: '2024', pl: '2024' },
+    benefit: {
+      en: 'A professional online presence that builds trust and brings in local jobs.',
+      pl: 'Profesjonalna obecność w sieci, która buduje zaufanie i przynosi lokalne zlecenia.',
+    },
     summary: {
       en: 'Marketing site for a German paving contractor. Translated client requirements into an implementation and executed the on-page SEO.',
       pl: 'Strona marketingowa dla niemieckiej firmy brukarskiej. Przełożyłem wymagania klienta na wdrożenie i zrealizowałem SEO on-page.',
@@ -100,6 +111,10 @@ const projectsRaw: readonly ProjectRaw[] = [
     status: 'maintenance',
     statusLabel: { en: 'Maintenance & Support', pl: 'Utrzymanie i wsparcie' },
     year: { en: '2023 — present', pl: '2023 — obecnie' },
+    benefit: {
+      en: 'Ongoing care that keeps the site fast and online, so downtime never costs a sale.',
+      pl: 'Stała opieka, dzięki której strona jest szybka i dostępna, więc żadna sprzedaż nie przepada przez przestój.',
+    },
     summary: {
       en: 'Ongoing technical custody of a live site — proactive performance monitoring, dependency upkeep, and iterative updates.',
       pl: 'Bieżąca opieka techniczna nad działającą stroną — proaktywny monitoring wydajności, utrzymanie zależności i iteracyjne aktualizacje.',
@@ -120,6 +135,10 @@ const projectsRaw: readonly ProjectRaw[] = [
     status: 'wip',
     statusLabel: { en: 'Work in progress', pl: 'W realizacji' },
     year: { en: '2025', pl: '2025' },
+    benefit: {
+      en: 'An online store that sells around the clock and grows with demand.',
+      pl: 'Sklep internetowy, który sprzedaje przez całą dobę i rośnie wraz z popytem.',
+    },
     summary: {
       en: 'Full-stack TCG e-commerce store on a serverless footprint — interactive product modules with scaling handled by AWS Lambda. Actively in development.',
       pl: 'Full-stackowy sklep e-commerce z kartami TCG w architekturze serverless — interaktywne moduły produktowe ze skalowaniem opartym o AWS Lambda. W aktywnym rozwoju.',
@@ -140,6 +159,7 @@ export function getProjects(lang: Lang): readonly Project[] {
     ...p,
     statusLabel: tr(p.statusLabel, lang),
     year: tr(p.year, lang),
+    benefit: tr(p.benefit, lang),
     summary: tr(p.summary, lang),
     scope: tr(p.scope, lang),
   }));

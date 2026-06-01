@@ -23,7 +23,6 @@ const en = {
     profile: 'Profile',
     selectedWork: 'Selected work',
     getInTouch: 'Get in touch',
-    availableForWork: 'Available for work',
     projectsLive: (n: string) => `${n} projects live`,
     scroll: 'Scroll',
   },
@@ -58,6 +57,44 @@ const en = {
     awaitingCapture: 'Awaiting capture',
     capturedWith: 'Full-page · Playwright',
     role: 'Role',
+    builtWith: 'Built with',
+  },
+
+  services: {
+    kicker: 'What I do',
+    title: 'Services',
+    note: 'Freelance · Remote',
+    lead: 'I design and build websites and online stores for small and medium businesses, with one goal: more customers. You get a clear scope and a fixed price up front, plus support once the site is live.',
+    offerings: ['Business websites', 'Online stores', 'Web apps', 'Care & maintenance'],
+    stepsKicker: 'How it works',
+    steps: [
+      {
+        title: 'Call & quote',
+        body: 'We talk through what your business needs. You get a clear scope and a fixed price before any work starts.',
+      },
+      {
+        title: 'Design & build',
+        body: 'I design and build the site and keep you in the loop. You see it take shape and give feedback along the way.',
+      },
+      {
+        title: 'Launch & support',
+        body: 'We launch, and I keep helping you with the site and any questions that come up.',
+      },
+    ],
+  },
+
+  cta: {
+    stripText: 'Want results like these for your business?',
+    stripButton: 'Get a quote',
+    contactPrompt: 'Need a website? Get a quote in 24 hours.',
+    contactButton: 'Get a quote',
+    mailSubject: 'Website enquiry',
+    responseNote: 'I reply to most messages within 24 hours.',
+  },
+
+  testimonials: {
+    kicker: 'Client reviews',
+    title: 'What clients say',
   },
 
   experience: {
@@ -105,7 +142,6 @@ const pl: typeof en = {
     profile: 'Profil',
     selectedWork: 'Wybrane projekty',
     getInTouch: 'Napisz do mnie',
-    availableForWork: 'Dostępny do pracy',
     projectsLive: (n: string) => `${n} projekty online`,
     scroll: 'Przewiń',
   },
@@ -140,6 +176,44 @@ const pl: typeof en = {
     awaitingCapture: 'Oczekiwanie na zrzut',
     capturedWith: 'Pełna strona · Playwright',
     role: 'Rola',
+    builtWith: 'Technologie',
+  },
+
+  services: {
+    kicker: 'Co robię',
+    title: 'Usługi',
+    note: 'Freelance · Zdalnie',
+    lead: 'Projektuję i buduję strony oraz sklepy internetowe dla małych i średnich firm. Cel jest prosty: więcej klientów. Dostajesz jasny zakres i stałą cenę z góry, a po starcie zostaję na wsparcie.',
+    offerings: ['Strony firmowe', 'Sklepy internetowe', 'Aplikacje webowe', 'Opieka i utrzymanie'],
+    stepsKicker: 'Jak to działa',
+    steps: [
+      {
+        title: 'Rozmowa i wycena',
+        body: 'Rozmawiamy o tym, czego potrzebuje Twoja firma. Dostajesz jasny zakres i stałą cenę, bez późniejszych niespodzianek.',
+      },
+      {
+        title: 'Projekt i realizacja',
+        body: 'Projektuję i buduję stronę, na bieżąco Cię informując. Widzisz, jak powstaje, i zgłaszasz uwagi po drodze.',
+      },
+      {
+        title: 'Wdrożenie i wsparcie',
+        body: 'Publikujemy stronę, a ja dalej pomagam Ci ze stroną i dalszymi pytaniami.',
+      },
+    ],
+  },
+
+  cta: {
+    stripText: 'Chcesz takich efektów dla swojej firmy?',
+    stripButton: 'Zapytaj o wycenę',
+    contactPrompt: 'Potrzebujesz strony? Wycena w 24 godziny.',
+    contactButton: 'Zapytaj o wycenę',
+    mailSubject: 'Zapytanie o stronę',
+    responseNote: 'Większość wiadomości odpowiadam w 24 godziny.',
+  },
+
+  testimonials: {
+    kicker: 'Opinie klientów',
+    title: 'Co mówią klienci',
   },
 
   experience: {

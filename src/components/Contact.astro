@@ -7,12 +7,15 @@ import Icon from '@/components/Icon.astro';
 const lang = toLang(Astro.currentLocale);
 const site = getSite(lang);
 const t = useTranslations(lang);
+
+// Pre-filled mailto lowers friction — opens the mail client with a subject set.
+const quoteMailto = `mailto:${site.contact.email}?subject=${encodeURIComponent(t.cta.mailSubject)}`;
 ---
 
 <section id="contact" class="contact py-section">
   <div class="sheet gutter-x">
     <div class="contact__meta font-mono reveal">
-      <span><span class="contact__idx">05</span> / {t.contact.kicker}</span>
+      <span><span class="contact__idx">06</span> / {t.contact.kicker}</span>
       <span class="contact__coords">
         {site.location.coordinates.lat} / {site.location.coordinates.lng}
       </span>
@@ -27,7 +30,16 @@ const t = useTranslations(lang);
       </p>
     </div>
 
-    <a href={`mailto:${site.contact.email}`} class="contact__email reveal" style="--reveal-delay:120ms">
+    <div class="contact__cta reveal" style="--reveal-delay:110ms">
+      <p class="contact__cta-prompt">{t.cta.contactPrompt}</p>
+      <a href={quoteMailto} class="btn btn--accent contact__cta-btn">
+        {t.cta.contactButton}
+        <Icon name="arrow-up-right" size={15} />
+      </a>
+      <p class="contact__cta-note font-mono">{t.cta.responseNote}</p>
+    </div>
+
+    <a href={`mailto:${site.contact.email}`} class="contact__email reveal" style="--reveal-delay:140ms">
       <span class="font-display">{site.contact.email}</span>
       <Icon name="arrow-up-right" size={28} class="contact__email-arrow" />
     </a>
@@ -119,6 +131,31 @@ const t = useTranslations(lang);
     color: var(--muted-on-ink);
     font-size: theme('fontSize.lede[0]');
     line-height: 1.5;
+  }
+
+  .contact__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: clamp(1.75rem, 4vw, 2.75rem);
+  }
+  .contact__cta-prompt {
+    margin: 0;
+    max-width: 26ch;
+    font-size: clamp(1.1rem, 1rem + 0.6vw, 1.45rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: var(--paper-on-ink);
+  }
+  .contact__cta-note {
+    width: 100%;
+    margin: 0.1rem 0 0;
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-on-ink);
   }
 
   .contact__email {
