@@ -1,0 +1,50 @@
+---
+import { ticker } from '@/data/stack';
+import Icon from '@/components/Icon.astro';
+
+// Render the list twice inside one track so the -50% loop is seamless.
+const loop = [...ticker, ...ticker];
+---
+
+<div class="band">
+  <div class="marquee" aria-label="Technical stack">
+    <div class="marquee__track" aria-hidden="false">
+      {
+        loop.map((item, i) => (
+          <span class="band__item">
+            <Icon name="asterisk" size={13} class="band__mark" />
+            <span class="font-mono band__label" aria-hidden={i >= ticker.length ? 'true' : undefined}>
+              {item}
+            </span>
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .band {
+    background: var(--ink-soft);
+    color: var(--paper-on-ink);
+    border-block: 1px solid var(--ink);
+    padding-block: 0.85rem;
+  }
+  .band__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.4rem;
+    padding-inline: 1.4rem;
+    flex: 0 0 auto;
+  }
+  .band__mark {
+    color: var(--oxblood-on-ink);
+    flex: 0 0 auto;
+  }
+  .band__label {
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+</style>

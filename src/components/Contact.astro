@@ -1,0 +1,222 @@
+---
+import { getSite } from '@/data/site';
+import { toLang } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import Icon from '@/components/Icon.astro';
+
+const lang = toLang(Astro.currentLocale);
+const site = getSite(lang);
+const t = useTranslations(lang);
+---
+
+<section id="contact" class="contact py-section">
+  <div class="sheet gutter-x">
+    <div class="contact__meta font-mono reveal">
+      <span><span class="contact__idx">05</span> / {t.contact.kicker}</span>
+      <span class="contact__coords">
+        {site.location.coordinates.lat} / {site.location.coordinates.lng}
+      </span>
+    </div>
+
+    <div class="contact__hero">
+      <h2 class="font-display contact__title reveal">
+        {t.contact.titleLines[0]}<br />{t.contact.titleLines[1]}<span class="contact__stop">.</span>
+      </h2>
+      <p class="contact__lede reveal text-pretty" style="--reveal-delay:90ms">
+        {site.summary[1]}
+      </p>
+    </div>
+
+    <a href={`mailto:${site.contact.email}`} class="contact__email reveal" style="--reveal-delay:120ms">
+      <span class="font-display">{site.contact.email}</span>
+      <Icon name="arrow-up-right" size={28} class="contact__email-arrow" />
+    </a>
+
+    <dl class="contact__grid reveal" style="--reveal-delay:160ms">
+      <div class="contact__cell">
+        <dt class="kicker kicker--ink">{t.contact.direct}</dt>
+        <dd>
+          <a href={site.contact.phone.href} class="link contact__value">{site.contact.phone.display}</a>
+        </dd>
+      </div>
+      <div class="contact__cell">
+        <dt class="kicker kicker--ink">{t.contact.basedIn}</dt>
+        <dd class="contact__value contact__value--static">
+          {site.location.city}, {site.location.country}
+        </dd>
+      </div>
+      <div class="contact__cell">
+        <dt class="kicker kicker--ink">{t.contact.status}</dt>
+        <dd class="contact__value contact__value--static">
+          <Icon name="dot" size={9} class="contact__dot" />
+          {site.status.label}
+        </dd>
+      </div>
+      <div class="contact__cell contact__cell--social">
+        <dt class="kicker kicker--ink">{t.contact.elsewhere}</dt>
+        <dd class="contact__social">
+          {
+            site.socials.map((s) => (
+              <a href={s.href} target="_blank" rel="noreferrer noopener" class="contact__soc">
+                <Icon name={s.icon} size={17} />
+                <span>{s.label}</span>
+                <Icon name="arrow-up-right" size={14} class="contact__soc-arrow" />
+              </a>
+            ))
+          }
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--ink-soft);
+    color: var(--paper-on-ink);
+    border-top: 1px solid var(--ink);
+  }
+  .contact .sheet {
+    border-inline-color: var(--rule-on-ink);
+  }
+
+  .contact__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-bottom: clamp(2rem, 5vw, 3.5rem);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-on-ink);
+  }
+  .contact__idx {
+    color: var(--oxblood-on-ink);
+  }
+
+  .contact__hero {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.75rem, 4vw, 3rem);
+  }
+  .contact__title {
+    font-stretch: 125%;
+    font-weight: 800;
+    font-size: clamp(2.7rem, 0.6rem + 9.2vw, 9rem);
+    line-height: 0.84;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--paper-on-ink);
+  }
+  .contact__stop {
+    color: var(--oxblood-on-ink);
+  }
+  .contact__lede {
+    max-width: 40ch;
+    margin: 0;
+    color: var(--muted-on-ink);
+    font-size: theme('fontSize.lede[0]');
+    line-height: 1.5;
+  }
+
+  .contact__email {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+    padding-block: clamp(1.25rem, 3vw, 2rem);
+    border-block: 1px solid var(--rule-on-ink);
+    color: var(--paper-on-ink);
+    transition: color 0.3s ease, padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .contact__email span {
+    font-stretch: 100%;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 0.5rem + 4.5vw, 3.4rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    word-break: break-word;
+  }
+  .contact__email-arrow {
+    flex: 0 0 auto;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+  }
+  .contact__email:hover,
+  .contact__email:focus-visible {
+    color: var(--oxblood-on-ink);
+    padding-left: 0.75rem;
+  }
+  .contact__email:hover .contact__email-arrow,
+  .contact__email:focus-visible .contact__email-arrow {
+    transform: translate(6px, -6px);
+    color: var(--oxblood-on-ink);
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+  }
+  .contact__cell {
+    padding-block: 1.35rem;
+    border-bottom: 1px solid var(--rule-on-ink);
+  }
+  .contact__cell dd {
+    margin: 0.6rem 0 0;
+  }
+  .contact__value {
+    font-size: 1.05rem;
+    color: var(--paper-on-ink);
+  }
+  .contact__value--static {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .contact__dot {
+    color: var(--oxblood-on-ink);
+    animation: blink 1.7s steps(1, end) infinite;
+  }
+  .contact__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .contact__soc {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.95rem;
+    color: var(--paper-on-ink);
+    transition: color 0.25s ease;
+  }
+  .contact__soc-arrow {
+    color: var(--muted-on-ink);
+    transition: transform 0.3s ease, color 0.25s ease;
+  }
+  .contact__soc:hover {
+    color: var(--oxblood-on-ink);
+  }
+  .contact__soc:hover .contact__soc-arrow {
+    transform: translate(3px, -3px);
+    color: var(--oxblood-on-ink);
+  }
+
+  @media (min-width: 48rem) {
+    .contact__lede {
+      align-self: flex-end;
+      max-width: 40ch;
+    }
+    .contact__grid {
+      grid-template-columns: 1fr 1fr;
+      column-gap: clamp(2rem, 5vw, 4rem);
+    }
+    .contact__cell--social {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

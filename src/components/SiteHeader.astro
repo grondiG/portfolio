@@ -1,0 +1,400 @@
+---
+import { getSite } from '@/data/site';
+import { toLang, alternatePath, LOCALES, LOCALE_META } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import Icon from '@/components/Icon.astro';
+
+const lang = toLang(Astro.currentLocale);
+const site = getSite(lang);
+const t = useTranslations(lang);
+const path = Astro.url.pathname;
+---
+
+<header data-header class="header">
+  <div class="sheet">
+    <div class="gutter-x header__bar">
+      <!-- Brand -->
+      <a href="#top" class="header__brand" aria-label={`${site.name} — ${site.role}`}>
+        <span class="header__mark font-display" aria-hidden="true">{site.initials}</span>
+        <span class="header__name">
+          <span class="font-mono">{site.name}</span>
+          <span class="font-mono header__role">{site.role}</span>
+        </span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="header__nav" aria-label="Primary">
+        {
+          site.nav.map((item) => (
+            <a href={item.href} data-nav-link class="header__link">
+              <span class="header__link-idx">{item.index}</span>
+              <span>{item.label}</span>
+            </a>
+          ))
+        }
+      </nav>
+
+      <!-- Status + lang + CTA + menu toggle -->
+      <div class="header__aside">
+        <span class="header__status" title={site.status.detail}>
+          <Icon name="dot" size={9} class="header__pulse" />
+          <span class="font-mono">{site.status.available ? t.header.available : t.header.booked}</span>
+        </span>
+
+        <div class="header__lang" role="group" aria-label={t.langSwitchLabel}>
+          {
+            LOCALES.map((loc) => (
+              <a
+                href={alternatePath(path, loc)}
+                class="header__lang-link font-mono"
+                hreflang={LOCALE_META[loc].htmlLang}
+                aria-current={loc === lang ? 'true' : undefined}
+              >
+                {LOCALE_META[loc].short}
+              </a>
+            ))
+          }
+        </div>
+
+        <a href="#contact" class="btn btn--ghost header__cta">
+          {t.header.contact}
+          <Icon name="arrow-up-right" size={15} />
+        </a>
+        <button
+          type="button"
+          class="header__toggle font-mono"
+          data-menu-toggle
+          aria-expanded="false"
+          aria-controls="site-menu"
+        >
+          <span class="header__toggle-open">{t.header.menuOpen}</span>
+          <span class="header__toggle-close">{t.header.menuClose}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Full-screen mobile index -->
+<div class="menu" id="site-menu" data-menu>
+  <div class="sheet gutter-x menu__inner">
+    <p class="kicker menu__kicker">{t.header.menuOpen}</p>
+    <nav aria-label="Mobile">
+      {
+        site.nav.map((item) => (
+          <a href={item.href} class="menu__link">
+            <span class="reg font-mono menu__link-idx">{item.index}</span>
+            <span class="font-display menu__link-label">{item.label}</span>
+            <Icon name="arrow-up-right" size={22} class="menu__link-arrow" />
+          </a>
+        ))
+      }
+    </nav>
+    <div class="menu__foot">
+      <a href={`mailto:${site.contact.email}`} class="font-mono menu__contact">{site.contact.email}</a>
+      <a href={site.contact.phone.href} class="font-mono menu__contact">{site.contact.phone.display}</a>
+      <div class="menu__lang" role="group" aria-label={t.langSwitchLabel}>
+        {
+          LOCALES.map((loc) => (
+            <a
+              href={alternatePath(path, loc)}
+              class="font-mono menu__lang-link"
+              hreflang={LOCALE_META[loc].htmlLang}
+              aria-current={loc === lang ? 'true' : undefined}
+            >
+              {LOCALE_META[loc].label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .header[data-scrolled] {
+    background: color-mix(in oklch, var(--paper) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom-color: var(--rule-strong);
+  }
+
+  .header__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    height: var(--header-h);
+  }
+
+  .header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex: 0 0 auto;
+  }
+  .header__mark {
+    display: grid;
+    place-content: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.95rem;
+    font-stretch: 125%;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    transition: background-color 0.3s ease;
+  }
+  .header__brand:hover .header__mark {
+    background: var(--oxblood);
+  }
+  .header__name {
+    display: none;
+    flex-direction: column;
+    gap: 0.15rem;
+    line-height: 1;
+  }
+  .header__name > span:first-child {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .header__role {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .header__nav {
+    display: none;
+    align-items: center;
+    gap: 1.6rem;
+  }
+  .header__link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    font-family: theme('fontFamily.mono');
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    transition: color 0.25s ease;
+  }
+  .header__link-idx {
+    font-size: 0.6rem;
+    color: var(--ink-muted);
+    transition: color 0.25s ease;
+  }
+  .header__link:hover,
+  .header__link:focus-visible {
+    color: var(--oxblood);
+  }
+  .header__link[aria-current='true'] {
+    color: var(--oxblood);
+  }
+  .header__link[aria-current='true'] .header__link-idx {
+    color: var(--oxblood);
+  }
+
+  .header__aside {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 0 0 auto;
+  }
+
+  .header__lang {
+    display: none;
+    align-items: center;
+  }
+  .header__lang-link {
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+    padding: 0.25rem 0.3rem;
+    transition: color 0.2s ease;
+  }
+  .header__lang-link[aria-current='true'] {
+    color: var(--ink);
+  }
+  .header__lang-link:hover,
+  .header__lang-link:focus-visible {
+    color: var(--oxblood);
+  }
+  .header__lang-link + .header__lang-link::before {
+    content: '/';
+    margin-right: 0.5rem;
+    color: var(--rule-strong);
+  }
+
+  .menu__lang {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+  }
+  .menu__lang-link {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    transition: color 0.2s ease;
+  }
+  .menu__lang-link[aria-current='true'] {
+    color: var(--ink);
+  }
+  .menu__lang-link:hover,
+  .menu__lang-link:focus-visible {
+    color: var(--oxblood);
+  }
+  .header__status {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .header__pulse {
+    color: var(--oxblood);
+    animation: blink 1.4s steps(1, end) infinite;
+  }
+  .header__cta {
+    display: none;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.66rem;
+  }
+
+  .header__toggle {
+    position: relative;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--rule-strong);
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .header__toggle-close {
+    display: none;
+  }
+  .header__toggle[aria-expanded='true'] .header__toggle-open {
+    display: none;
+  }
+  .header__toggle[aria-expanded='true'] .header__toggle-close {
+    display: inline;
+  }
+  .header__toggle[aria-expanded='true'] {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* ---- Mobile menu ---- */
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    background: var(--paper);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-1.5%);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+  }
+  .menu[data-open] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .menu__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-top: calc(var(--header-h) + 2rem);
+    padding-bottom: 2rem;
+    min-height: 100svh;
+  }
+  .menu__kicker {
+    margin-bottom: 1.5rem;
+  }
+  .menu__link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-block: clamp(0.6rem, 2vw, 1.1rem);
+    border-top: 1px solid var(--rule);
+    color: var(--ink);
+  }
+  .menu__link:last-of-type {
+    border-bottom: 1px solid var(--rule);
+  }
+  .menu__link-idx {
+    font-size: 0.85rem;
+  }
+  .menu__link-label {
+    flex: 1;
+    font-stretch: 125%;
+    font-weight: 800;
+    font-size: clamp(2rem, 9vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .menu__link-arrow {
+    color: var(--ink-muted);
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  .menu__link:hover .menu__link-arrow {
+    transform: translate(3px, -3px);
+    color: var(--oxblood);
+  }
+  .menu__link:hover .menu__link-label {
+    color: var(--oxblood);
+  }
+  .menu__foot {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 2rem;
+  }
+  .menu__contact {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+  }
+
+  @media (min-width: 48rem) {
+    .header__name {
+      display: flex;
+    }
+    .header__status {
+      display: inline-flex;
+    }
+    .header__lang {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .header__nav {
+      display: flex;
+    }
+    .header__cta {
+      display: inline-flex;
+    }
+    .header__toggle {
+      display: none;
+    }
+    .menu {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,180 @@
+---
+import { getExperience } from '@/data/experience';
+import { toLang } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import SectionHeader from '@/components/SectionHeader.astro';
+
+const lang = toLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const experience = getExperience(lang);
+---
+
+<section id="path" class="section py-section">
+  <div class="sheet gutter-x">
+    <SectionHeader index="04" kicker={t.experience.kicker} title={t.experience.title} note={t.experience.note} />
+
+    <ol class="time">
+      {
+        experience.map((role) => (
+          <li class="entry reveal" data-current={role.period.current ? 'true' : undefined}>
+            <div class="entry__meta">
+              <span class="reg font-mono entry__idx">{role.index}</span>
+              <span class="font-mono entry__period">
+                {role.period.start} — {role.period.end}
+              </span>
+              <span class="font-mono entry__kind">
+                {role.period.current ? t.experience.current : t.experience.kinds[role.kind]}
+              </span>
+            </div>
+
+            <div class="entry__main">
+              <h3 class="font-display entry__role">{role.title}</h3>
+              <p class="font-mono entry__org">
+                <span class="entry__company">{role.company}</span>
+                <span class="entry__loc">{role.location}</span>
+              </p>
+              <ul class="entry__points">
+                {role.summary.map((point) => (
+                  <li class="text-pretty">{point}</li>
+                ))}
+              </ul>
+              <ul class="entry__stack" aria-label="Stack used">
+                {role.stack.map((tech) => (
+                  <li class="tag">{tech}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .time {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .entry {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem 0;
+    padding-block: clamp(1.75rem, 4vw, 2.75rem);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .entry__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem 1.25rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .entry__idx {
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+  }
+  .entry__period {
+    color: var(--ink);
+  }
+  .entry__kind {
+    color: var(--ink-muted);
+  }
+  .entry[data-current] .entry__kind {
+    color: var(--oxblood);
+  }
+
+  .entry__role {
+    font-stretch: 110%;
+    font-weight: 700;
+    font-size: clamp(1.45rem, 1rem + 1.8vw, 2.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .entry__org {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    margin: 0.7rem 0 0;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
+  }
+  .entry__company {
+    color: var(--ink);
+  }
+  .entry__loc::before {
+    content: '·';
+    margin-right: 0.9rem;
+    color: var(--rule-strong);
+  }
+
+  .entry__points {
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: 64ch;
+  }
+  .entry__points li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--ink-muted);
+  }
+  .entry__points li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.7rem;
+    height: 1px;
+    background: var(--oxblood);
+  }
+
+  .entry__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 1.4rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 64rem) {
+    .entry {
+      grid-template-columns: minmax(12rem, 15rem) 1fr;
+      gap: 2.5rem;
+    }
+    .entry__meta {
+      flex-direction: column;
+      gap: 0.65rem;
+      align-self: start;
+      position: sticky;
+      top: calc(var(--header-h) + 1.5rem);
+    }
+    /* Spine + node marker (1px hairline, not an accent stripe). */
+    .entry__main {
+      position: relative;
+      padding-left: 2.5rem;
+      border-left: 1px solid var(--rule);
+    }
+    .entry__main::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 0.55rem;
+      width: 7px;
+      height: 7px;
+      background: var(--ink);
+    }
+    .entry[data-current] .entry__main::before {
+      background: var(--oxblood);
+    }
+  }
+</style>

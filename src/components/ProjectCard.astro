@@ -1,0 +1,239 @@
+---
+import type { Project } from '@/data/projects';
+import { STATUS_META } from '@/data/projects';
+import { toLang } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import Icon from '@/components/Icon.astro';
+
+interface Props {
+  project: Project;
+  position: number;
+}
+
+const { project, position } = Astro.props;
+const t = useTranslations(toLang(Astro.currentLocale));
+const flip = position % 2 === 1;
+const primary = project.links.find((l) => l.primary) ?? project.links[0];
+const tone = STATUS_META[project.status].tone;
+---
+
+<article class="proj reveal" data-flip={flip ? 'true' : undefined}>
+  <!-- Capture plate -->
+  <figure class="frame proj__frame">
+    <figcaption class="frame__bar">
+      <span class="proj__file">{project.id}.png</span>
+      <span class="proj__chip" data-tone={tone}>{project.statusLabel}</span>
+    </figcaption>
+
+    <a
+      class="frame__viewport"
+      href={primary.url}
+      target="_blank"
+      rel="noreferrer noopener"
+      aria-label={`Open ${project.title} live in a new tab`}
+    >
+      <div class="frame__placeholder" aria-hidden="true">
+        <span class="kicker">{t.work.awaitingCapture}</span>
+        <span class="font-mono proj__phfile">/images/screenshots/{project.id}.png</span>
+        <span class="font-mono proj__phnote">{t.work.capturedWith}</span>
+      </div>
+      <img
+        class="frame__img"
+        src={project.thumbnailPlaceholder}
+        alt={`Full-page screenshot of the ${project.title} website`}
+        loading="lazy"
+        decoding="async"
+        width="1440"
+        height="2400"
+      />
+    </a>
+  </figure>
+
+  <!-- Details -->
+  <div class="proj__body">
+    <div class="proj__top">
+      <span class="reg font-mono proj__idx">{project.index}</span>
+      <span class="font-mono proj__year">{project.year}</span>
+    </div>
+
+    <h3 class="font-display proj__title">{project.title}</h3>
+
+    <p class="proj__statusline font-mono" data-tone={tone}>
+      <Icon name="dot" size={9} class="proj__dot" />
+      {project.statusLabel}
+    </p>
+
+    <p class="proj__summary text-pretty">{project.summary}</p>
+
+    <p class="kicker proj__scope">
+      <span class="proj__scope-key">{t.work.role}</span>
+      {project.scope.join('  /  ')}
+    </p>
+
+    <ul class="proj__stack" aria-label="Project stack">
+      {project.stack.map((tech) => <li class="tag">{tech}</li>)}
+    </ul>
+
+    <div class="proj__links">
+      {
+        project.links.map((l, i) => (
+          <a
+            class={i === 0 ? 'link link--accent proj__link' : 'link proj__link'}
+            href={l.url}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            {l.label}
+            <Icon name="arrow-up-right" size={16} />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</article>
+
+<style>
+  .proj {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.75rem, 4vw, 3rem);
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--rule);
+  }
+  .proj:first-child {
+    border-top: 0;
+    padding-top: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .proj__frame {
+    align-self: start;
+  }
+  .proj__file {
+    color: var(--ink-muted);
+  }
+  .proj__chip {
+    color: var(--ink);
+  }
+  .proj__chip[data-tone='live'] {
+    color: var(--oxblood);
+  }
+
+  .frame__viewport {
+    display: block;
+    cursor: pointer;
+  }
+  .proj__phfile {
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+  .proj__phnote {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .proj__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .proj__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 0.85rem;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .proj__idx {
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+  }
+  .proj__title {
+    font-stretch: 125%;
+    font-weight: 800;
+    font-size: clamp(2rem, 1rem + 3.5vw, 3.4rem);
+    line-height: 0.94;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .proj__statusline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .proj__dot {
+    color: var(--ink-muted);
+  }
+  .proj__statusline[data-tone='live'] .proj__dot {
+    color: var(--oxblood);
+  }
+  .proj__statusline[data-tone='building'] .proj__dot {
+    color: var(--oxblood);
+    animation: blink 1.5s steps(1, end) infinite;
+  }
+
+  .proj__summary {
+    max-width: 46ch;
+    margin: 1.4rem 0 0;
+    color: var(--ink-muted);
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+
+  .proj__scope {
+    margin: 1.5rem 0 0;
+    line-height: 1.7;
+    color: var(--ink-muted);
+  }
+  .proj__scope-key {
+    color: var(--oxblood);
+    margin-right: 0.85rem;
+  }
+
+  .proj__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .proj__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 1.75rem;
+    margin-top: 2rem;
+  }
+  .proj__link {
+    font-family: theme('fontFamily.mono');
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (min-width: 64rem) {
+    .proj {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      align-items: center;
+      gap: clamp(3rem, 6vw, 6rem);
+    }
+    .proj[data-flip='true'] .proj__frame {
+      order: 2;
+    }
+    .proj__body {
+      justify-content: center;
+    }
+  }
+</style>

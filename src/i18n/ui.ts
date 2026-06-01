@@ -1,0 +1,177 @@
+import type { Lang } from '@/i18n/config';
+
+/**
+ * UI / chrome strings. Content (projects, experience, …) is localised in the
+ * data modules; this covers labels, section headings and micro-copy.
+ *
+ * Polish note: the few pluralised strings are written for the actual fixed
+ * counts in this CV (4 projects, 6 groups, 34 tools), so they read correctly.
+ */
+const en = {
+  skip: 'Skip to content',
+  langSwitchLabel: 'Język / Language',
+
+  header: {
+    available: 'Available',
+    booked: 'Booked',
+    contact: 'Contact',
+    menuOpen: 'Index',
+    menuClose: 'Close',
+  },
+
+  hero: {
+    profile: 'Profile',
+    selectedWork: 'Selected work',
+    getInTouch: 'Get in touch',
+    availableForWork: 'Available for work',
+    projectsLive: (n: string) => `${n} projects live`,
+    scroll: 'Scroll',
+  },
+
+  about: {
+    kicker: 'Profile',
+    title: 'The short version',
+    note: 'Wrocław · PL',
+    facts: {
+      discipline: 'Discipline',
+      located: 'Located',
+      experience: 'Experience',
+      core: 'Core',
+      availability: 'Availability',
+      studying: 'Studying',
+    },
+    disciplineValue: 'Full-Stack Development',
+    experienceValue: (y: string) => `~${y} yrs commercial`,
+  },
+
+  stack: {
+    kicker: 'Capabilities',
+    title: 'Technical stack',
+    note: (tools: number, groups: number) => `${tools} tools / ${groups} groups`,
+  },
+
+  work: {
+    kicker: 'Selected work',
+    title: 'Live projects',
+    note: (n: string) => `${n} shipped`,
+    lead: 'A working sample — every entry below is a public, live URL. Hover a plate to let the full-page capture scroll.',
+    awaitingCapture: 'Awaiting capture',
+    capturedWith: 'Full-page · Playwright',
+    role: 'Role',
+  },
+
+  experience: {
+    kicker: 'Trajectory',
+    title: 'Experience',
+    note: '2022 — present',
+    current: 'Current',
+    kinds: { freelance: 'Freelance', employment: 'Employment', internship: 'Internship' },
+  },
+
+  education: {
+    head: 'Education / Background',
+  },
+
+  contact: {
+    kicker: 'Contact',
+    titleLines: ['Let’s work', 'together'],
+    direct: 'Direct',
+    basedIn: 'Based in',
+    status: 'Status',
+    elsewhere: 'Elsewhere',
+  },
+
+  footer: {
+    builtWith: 'Built with Astro + Tailwind',
+    setIn: 'Set in Archivo Expanded, Hanken Grotesk & Martian Mono',
+    noTrackers: 'No cookies · No trackers',
+    backToTop: 'Back to top',
+  },
+};
+
+const pl: typeof en = {
+  skip: 'Przejdź do treści',
+  langSwitchLabel: 'Język / Language',
+
+  header: {
+    available: 'Dostępny',
+    booked: 'Zajęty',
+    contact: 'Kontakt',
+    menuOpen: 'Indeks',
+    menuClose: 'Zamknij',
+  },
+
+  hero: {
+    profile: 'Profil',
+    selectedWork: 'Wybrane projekty',
+    getInTouch: 'Napisz do mnie',
+    availableForWork: 'Dostępny do pracy',
+    projectsLive: (n: string) => `${n} projekty online`,
+    scroll: 'Przewiń',
+  },
+
+  about: {
+    kicker: 'Profil',
+    title: 'W skrócie',
+    note: 'Wrocław · PL',
+    facts: {
+      discipline: 'Specjalizacja',
+      located: 'Lokalizacja',
+      experience: 'Doświadczenie',
+      core: 'Główne',
+      availability: 'Dostępność',
+      studying: 'Studia',
+    },
+    disciplineValue: 'Full-Stack Development',
+    experienceValue: (y: string) => `~${y} lata komercyjnie`,
+  },
+
+  stack: {
+    kicker: 'Kompetencje',
+    title: 'Technologie',
+    note: (tools: number, groups: number) => `${tools} narzędzi / ${groups} grup`,
+  },
+
+  work: {
+    kicker: 'Wybrane projekty',
+    title: 'Realizacje',
+    note: (n: string) => `${n} wdrożone`,
+    lead: 'Wybrane realizacje — każda pozycja poniżej to publiczny, działający adres. Najedź na kadr, aby przewinąć pełny zrzut strony.',
+    awaitingCapture: 'Oczekiwanie na zrzut',
+    capturedWith: 'Pełna strona · Playwright',
+    role: 'Rola',
+  },
+
+  experience: {
+    kicker: 'Ścieżka kariery',
+    title: 'Doświadczenie',
+    note: '2022 — obecnie',
+    current: 'Obecnie',
+    kinds: { freelance: 'Freelance', employment: 'Etat', internship: 'Staż' },
+  },
+
+  education: {
+    head: 'Edukacja / Wykształcenie',
+  },
+
+  contact: {
+    kicker: 'Kontakt',
+    titleLines: ['Zróbmy', 'coś razem'],
+    direct: 'Telefon',
+    basedIn: 'Lokalizacja',
+    status: 'Status',
+    elsewhere: 'Gdzie indziej',
+  },
+
+  footer: {
+    builtWith: 'Zbudowane w Astro + Tailwind',
+    setIn: 'Złożono krojami Archivo Expanded, Hanken Grotesk i Martian Mono',
+    noTrackers: 'Bez ciasteczek · Bez śledzenia',
+    backToTop: 'Do góry',
+  },
+};
+
+export const UI = { en, pl } satisfies Record<Lang, typeof en>;
+
+export const useTranslations = (lang: Lang) => UI[lang];
+export type UIStrings = typeof en;

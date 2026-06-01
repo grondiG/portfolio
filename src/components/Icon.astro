@@ -1,0 +1,33 @@
+---
+import { ICONS, type IconName } from '@/lib/icons';
+
+interface Props {
+  name: IconName;
+  size?: number | string;
+  class?: string;
+  strokeWidth?: number;
+  /** Provide to expose the icon to AT; omit for decorative icons. */
+  label?: string;
+}
+
+const { name, size = 20, class: className, strokeWidth = 2, label } = Astro.props;
+const def = ICONS[name];
+const dim = typeof size === 'number' ? `${size}` : size;
+const a11y = label
+  ? ({ role: 'img', 'aria-label': label } as const)
+  : ({ 'aria-hidden': 'true', focusable: 'false' } as const);
+---
+
+<svg
+  class={className}
+  width={dim}
+  height={dim}
+  viewBox={def.viewBox}
+  fill={def.mode === 'fill' ? 'currentColor' : 'none'}
+  stroke={def.mode === 'stroke' ? 'currentColor' : 'none'}
+  stroke-width={strokeWidth}
+  stroke-linecap="square"
+  stroke-linejoin="miter"
+  {...a11y}
+  set:html={def.body}
+/>

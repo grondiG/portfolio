@@ -1,0 +1,40 @@
+# ---- Build output ----
+dist/
+.output/
+.vercel/
+.netlify/
+
+# ---- Dependencies ----
+node_modules/
+.pnp
+.pnp.js
+
+# ---- Astro ----
+.astro/
+
+# ---- Claude Code (local agent settings — not for the repo) ----
+.claude/
+
+# ---- Environment ----
+.env
+.env.*
+!.env.example
+
+# ---- Logs ----
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- Editor / OS ----
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# ---- Notes ----
+# Project screenshots in public/images/screenshots/*.png ARE committed on
+# purpose: a git-based static deploy needs them, or the cards fall back to the
+# "awaiting capture" plate. Re-generate them any time with `npm run capture`.

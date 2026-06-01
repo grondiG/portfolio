@@ -1,0 +1,108 @@
+---
+import { getSite } from '@/data/site';
+import { toLang } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import Icon from '@/components/Icon.astro';
+
+const lang = toLang(Astro.currentLocale);
+const site = getSite(lang);
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="sheet gutter-x foot__inner">
+    <div class="foot__col">
+      <p class="font-mono foot__line">© {year} {site.name}</p>
+      <p class="font-mono foot__muted">{site.role} · {site.location.city}, {site.location.countryCode}</p>
+    </div>
+
+    <div class="foot__col foot__col--colophon">
+      <p class="font-mono foot__muted">{t.footer.builtWith}</p>
+      <p class="font-mono foot__muted">{t.footer.setIn}</p>
+    </div>
+
+    <div class="foot__col foot__col--end">
+      <p class="font-mono foot__muted">{t.footer.noTrackers}</p>
+      <a href="#top" class="foot__top font-mono">
+        {t.footer.backToTop}
+        <span class="foot__top-mark"><Icon name="arrow-down" size={13} class="foot__top-arrow" /></span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    background: var(--ink);
+    color: var(--paper-on-ink);
+    border-top: 1px solid var(--rule-on-ink);
+  }
+  .foot .sheet {
+    border-inline-color: var(--rule-on-ink);
+  }
+  .foot__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    padding-block: clamp(2rem, 4vw, 3rem);
+  }
+  .foot__line {
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--paper-on-ink);
+    margin: 0 0 0.5rem;
+  }
+  .foot__muted {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    color: var(--muted-on-ink);
+    margin: 0;
+  }
+
+  .foot__top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--paper-on-ink);
+    transition: color 0.25s ease;
+  }
+  .foot__top-mark {
+    display: grid;
+    place-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--rule-on-ink);
+  }
+  .foot__top-arrow {
+    transform: rotate(180deg);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .foot__top:hover {
+    color: var(--oxblood-on-ink);
+  }
+  .foot__top:hover .foot__top-arrow {
+    transform: rotate(180deg) translateY(3px);
+  }
+
+  @media (min-width: 48rem) {
+    .foot__inner {
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: start;
+    }
+    .foot__col--colophon {
+      text-align: center;
+    }
+    .foot__col--end {
+      text-align: right;
+    }
+    .foot__col--end .foot__top {
+      justify-content: flex-end;
+    }
+  }
+</style>

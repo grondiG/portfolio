@@ -1,0 +1,10 @@
+---
+// Polish route. `Astro.currentLocale` resolves to 'pl' here, so BaseLayout and
+// every section render their Polish strings.
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Home from '@/components/Home.astro';
+---
+
+<BaseLayout>
+  <Home />
+</BaseLayout>

@@ -1,0 +1,37 @@
+---
+import { getProjects } from '@/data/projects';
+import { toLang } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import SectionHeader from '@/components/SectionHeader.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+
+const lang = toLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const projects = getProjects(lang);
+const count = String(projects.length).padStart(2, '0');
+---
+
+<section id="work" class="section py-section">
+  <div class="sheet gutter-x">
+    <SectionHeader index="03" kicker={t.work.kicker} title={t.work.title} note={t.work.note(count)} />
+
+    <p class="work__lead reveal text-pretty">{t.work.lead}</p>
+
+    <div class="work__list">
+      {projects.map((project, i) => <ProjectCard project={project} position={i} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .work__lead {
+    max-width: 52ch;
+    margin: 0 0 clamp(1rem, 3vw, 2rem);
+    color: var(--ink-muted);
+    font-size: theme('fontSize.lede[0]');
+    line-height: 1.5;
+  }
+  .work__list {
+    border-top: 1px solid var(--ink);
+  }
+</style>

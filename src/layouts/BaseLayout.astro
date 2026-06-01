@@ -1,0 +1,258 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { getSite } from '@/data/site';
+import { LOCALES, LOCALE_META, toLang, alternatePath, DEFAULT_LOCALE } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import SiteHeader from '@/components/SiteHeader.astro';
+import Footer from '@/components/Footer.astro';
+
+// Self-hosted variable fonts (no external requests). Archivo & Martian Mono use
+// the combined `standard` axis file so we can drive both weight and width.
+import '@fontsource-variable/archivo/standard.css';
+import '@fontsource-variable/hanken-grotesk/index.css';
+import '@fontsource-variable/martian-mono/standard.css';
+import '@/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const lang = toLang(Astro.currentLocale);
+const site = getSite(lang);
+const t = useTranslations(lang);
+
+const { title = site.meta.title, description = site.meta.description } = Astro.props;
+const origin = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(Astro.url.pathname, origin).toString();
+
+// hreflang alternates for every locale, plus x-default → English.
+const alternates = LOCALES.map((loc) => ({
+  hreflang: LOCALE_META[loc].htmlLang,
+  href: new URL(alternatePath(Astro.url.pathname, loc), origin).toString(),
+}));
+const xDefault = new URL(alternatePath(Astro.url.pathname, DEFAULT_LOCALE), origin).toString();
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: site.role,
+  email: `mailto:${site.contact.email}`,
+  telephone: site.contact.phone.display,
+  url: canonical,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.location.city,
+    addressCountry: site.location.countryCode,
+  },
+  knowsAbout: ['Angular', 'React', 'Node.js', 'TypeScript', 'AWS', 'Serverless'],
+  sameAs: site.socials.map((s) => s.href),
+};
+---
+
+<!doctype html>
+<html lang={LOCALE_META[lang].htmlLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
+    <meta name="theme-color" content="#f3efe9" />
+    <meta name="author" content={site.name} />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={lang === 'pl' ? 'pl_PL' : 'en_US'} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(personLd)} />
+
+    <ClientRouter />
+  </head>
+
+  <body>
+    <a href="#main" class="sr-only-focusable">{t.skip}</a>
+
+    <!-- Reading-progress hairline. -->
+    <div class="progress" data-progress aria-hidden="true"></div>
+
+    <SiteHeader />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script>
+      // ---- Progressive enhancement. Hooks astro:page-load so it survives
+      //      View Transitions. Per-page bits re-run; global listeners bind once.
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+      function initReveals() {
+        const els = document.querySelectorAll<HTMLElement>('.reveal:not(.is-in)');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window) || reduce.matches) {
+          els.forEach((el) => el.classList.add('is-in'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-in');
+                obs.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
+        );
+        els.forEach((el) => io.observe(el));
+      }
+
+      function initFrames() {
+        document.querySelectorAll<HTMLImageElement>('.frame__img').forEach((img) => {
+          if (img.dataset.bound) return;
+          img.dataset.bound = '1';
+          const mark = () => {
+            if (img.naturalWidth > 0) img.classList.add('is-loaded');
+          };
+          if (img.complete) mark();
+          img.addEventListener('load', mark);
+          // On error we intentionally do nothing — the designed placeholder shows.
+        });
+      }
+
+      function initNav() {
+        const links = Array.from(
+          document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
+        );
+        const map = new Map<string, HTMLAnchorElement>();
+        links.forEach((l) => {
+          const id = l.getAttribute('href')?.slice(1);
+          if (id) map.set(id, l);
+        });
+        const sections = Array.from(document.querySelectorAll<HTMLElement>('section[id]'));
+        if (!sections.length || !('IntersectionObserver' in window)) return;
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (!e.isIntersecting) return;
+              links.forEach((l) => l.removeAttribute('aria-current'));
+              map.get((e.target as HTMLElement).id)?.setAttribute('aria-current', 'true');
+            });
+          },
+          { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
+        );
+        sections.forEach((s) => io.observe(s));
+      }
+
+      function initHeader() {
+        const header = document.querySelector<HTMLElement>('[data-header]');
+        if (!header) return;
+        const onScroll = () => header.toggleAttribute('data-scrolled', window.scrollY > 8);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+
+      function initProgress() {
+        const bar = document.querySelector<HTMLElement>('[data-progress]');
+        if (!bar) return;
+        let ticking = false;
+        const update = () => {
+          const h = document.documentElement;
+          const max = h.scrollHeight - h.clientHeight;
+          bar.style.transform = `scaleX(${max > 0 ? h.scrollTop / max : 0})`;
+          ticking = false;
+        };
+        window.addEventListener(
+          'scroll',
+          () => {
+            if (!ticking) {
+              ticking = true;
+              requestAnimationFrame(update);
+            }
+          },
+          { passive: true },
+        );
+        update();
+      }
+
+      function initMenu() {
+        const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+        const panel = document.querySelector<HTMLElement>('[data-menu]');
+        if (!toggle || !panel) return;
+        const set = (open: boolean) => {
+          toggle.setAttribute('aria-expanded', String(open));
+          panel.toggleAttribute('data-open', open);
+          document.documentElement.style.overflow = open ? 'hidden' : '';
+        };
+        toggle.addEventListener('click', () =>
+          set(toggle.getAttribute('aria-expanded') !== 'true'),
+        );
+        panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') set(false);
+        });
+      }
+
+      let booted = false;
+      function boot() {
+        initReveals();
+        initFrames();
+        if (booted) return;
+        booted = true;
+        initNav();
+        initHeader();
+        initProgress();
+        initMenu();
+      }
+      document.addEventListener('astro:page-load', boot);
+    </script>
+  </body>
+</html>
+
+<style>
+  .sr-only-focusable {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(-150%);
+    padding: 0.7rem 1rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: theme('fontFamily.mono');
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sr-only-focusable:focus {
+    transform: translateY(0);
+  }
+
+  .progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 2px;
+    z-index: 60;
+    background: var(--oxblood);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+</style>

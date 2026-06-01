@@ -1,0 +1,97 @@
+---
+import { getSite } from '@/data/site';
+import { getEducation } from '@/data/education';
+import { toLang } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import SectionHeader from '@/components/SectionHeader.astro';
+
+const lang = toLang(Astro.currentLocale);
+const site = getSite(lang);
+const t = useTranslations(lang);
+const f = t.about.facts;
+
+const currentStudy = getEducation(lang).find((e) => e.current);
+
+const facts: { label: string; value: string }[] = [
+  { label: f.discipline, value: t.about.disciplineValue },
+  { label: f.located, value: `${site.location.city}, ${site.location.country}` },
+  { label: f.experience, value: t.about.experienceValue(site.experience.years) },
+  { label: f.core, value: site.roleStack.join(' · ') },
+  { label: f.availability, value: site.status.detail },
+  ...(currentStudy ? [{ label: f.studying, value: currentStudy.program }] : []),
+];
+---
+
+<section id="profile" class="section py-section">
+  <div class="sheet gutter-x">
+    <SectionHeader index="01" kicker={t.about.kicker} title={t.about.title} note={t.about.note} />
+
+    <div class="about">
+      <div class="about__prose reveal">
+        <p class="about__lede text-pretty">{site.summary[0]}</p>
+        {site.summary.slice(1).map((p) => <p class="about__p text-pretty">{p}</p>)}
+      </div>
+
+      <dl class="about__facts reveal" style="--reveal-delay:120ms">
+        {
+          facts.map((f) => (
+            <div class="fact">
+              <dt class="kicker">{f.label}</dt>
+              <dd class="fact__value">{f.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  .about__lede {
+    font-size: theme('fontSize.lede[0]');
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    max-width: 60ch;
+    margin: 0 0 1.5rem;
+    text-wrap: pretty;
+  }
+  .about__p {
+    max-width: 58ch;
+    margin: 0 0 1.1rem;
+    color: var(--ink-muted);
+  }
+
+  .about__facts {
+    margin: 0;
+    align-self: start;
+  }
+  .fact {
+    border-top: 1px solid var(--rule);
+    padding-block: 0.95rem;
+  }
+  .fact:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+  .fact__value {
+    margin: 0.4rem 0 0;
+    font-weight: 500;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  @media (min-width: 64rem) {
+    .about {
+      grid-template-columns: minmax(0, 1.5fr) minmax(15rem, 0.8fr);
+      gap: clamp(3rem, 6vw, 6rem);
+    }
+    .about__lede {
+      font-size: clamp(1.3rem, 1rem + 0.9vw, 1.7rem);
+    }
+  }
+</style>
