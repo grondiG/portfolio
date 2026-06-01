@@ -98,7 +98,7 @@ const tone = STATUS_META[project.status].tone;
 <style>
   .proj {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: clamp(1.75rem, 4vw, 3rem);
     padding-block: clamp(2.5rem, 5vw, 4rem);
     border-top: 1px solid var(--rule);
@@ -112,9 +112,15 @@ const tone = STATUS_META[project.status].tone;
     align-self: start;
   }
   .proj__file {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     color: var(--ink-muted);
   }
   .proj__chip {
+    flex: 0 0 auto;
+    white-space: nowrap;
     color: var(--ink);
   }
   .proj__chip[data-tone='live'] {
@@ -141,6 +147,7 @@ const tone = STATUS_META[project.status].tone;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    min-width: 0;
   }
   .proj__top {
     display: flex;
@@ -158,6 +165,10 @@ const tone = STATUS_META[project.status].tone;
     letter-spacing: 0.06em;
   }
   .proj__title {
+    /* In the flex-start column the title is content-sized; cap it to the
+       column so a long single word (e.g. PFLASTERARBEITEN) wraps instead of
+       widening the card past the screen. */
+    max-width: 100%;
     font-stretch: 125%;
     font-weight: 800;
     font-size: clamp(2rem, 1rem + 3.5vw, 3.4rem);

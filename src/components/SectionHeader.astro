@@ -38,13 +38,16 @@ const { index, kicker, title, note } = Astro.props;
   }
   .sec__row {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 1.5rem;
+    gap: 0.5rem 1.5rem;
     border-top: 1px solid var(--ink);
     padding-top: clamp(1rem, 2.5vw, 1.75rem);
   }
   .sec__title {
+    flex: 1 1 auto;
+    min-width: 0;
     font-stretch: 125%;
     font-weight: 800;
     font-size: theme('fontSize.h1[0]');

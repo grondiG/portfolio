@@ -49,6 +49,10 @@
 
   html {
     -webkit-text-size-adjust: 100%;
+    /* Belt-and-suspenders: never allow a stray wide element to introduce a
+       horizontal scrollbar. `clip` (not `hidden`) keeps the root as the
+       vertical scroll container, so position:sticky still resolves. */
+    overflow-x: clip;
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--header-h) + 1.5rem);
     text-rendering: optimizeLegibility;
@@ -88,6 +92,24 @@
   picture {
     display: block;
     max-width: 100%;
+  }
+
+  /* Long unbreakable tokens — German compounds (PFLASTERARBEITEN), emails,
+     URLs — must wrap rather than force the page wider than the screen.
+     `break-word` only kicks in when a word would otherwise overflow. */
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  li,
+  a,
+  dd,
+  dt,
+  span,
+  blockquote,
+  figcaption {
+    overflow-wrap: break-word;
   }
 
   /* Tabular figures everywhere mono is used keeps the technical labels aligned. */
@@ -376,6 +398,32 @@
       linear-gradient(var(--rule) 1px, transparent 1px),
       linear-gradient(90deg, var(--rule) 1px, transparent 1px);
     background-size: 2.75rem 2.75rem;
+  }
+}
+
+/* ============================================================
+   KEYFRAMES
+   Declared explicitly here (not via Tailwind's animate-* utilities) so they
+   are always present in the bundle — the marquee bands and blinking accents
+   reference them directly in component CSS.
+   ============================================================ */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes blink {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
   }
 }
 
